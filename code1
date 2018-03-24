@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+int main(){
+    int n,k,l,rev=0;
+    cin>>n;
+   
+    l=n;
+   
+    while(l>0){
+        k=l%10;
+        rev=10*rev+k;
+        l=l/10;
+    }
+   
+    cout<<(rev+n)<<endl;
+    return 0;
+}
