@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int is_prime(int num)
+{
+    int isprime = 1;
+    if(num == 2) return isprime;
+    for(int i = 2; i <= sqrt(num); ++i)
+    {
+        if((int(num)% i) == 0)
+        {
+            isprime = 0;
+            break;
+        }
+    }
+    return isprime;
+}
+int main()
+{ 
+   int a[500],count=0,n,i,j,temp,p=0,q=0;
+    while(cin>>n){
+         for(i = 2; i <= 1000; ++i) {
+        if(is_prime(i)){
+           a[count]=i;
+           count++;
+        } 
+ }
+        for(i=0;i<=count;i++){
+            if(a[i]>=n){temp=i;break;} 
+        }
+        for(i=0;i<temp;i++){
+            for(j=0;j<temp;j++){
+                if(a[i]+a[j]==n&&i==j) p++;
+                if(a[i]+a[j]==n&&i!=j) q++;
+                
+            }
+        }
+        cout<<p+q/2;
+    }
+   
+   return 0;
+}
