@@ -1,0 +1,35 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int main(){
+   int N,M;   
+while(cin>>N>>M){
+   int i,j,max,m,n;
+  int *s=new int[N];  
+  
+    
+    
+    char c;
+    int a;
+     int b;
+    for(i=0;i<N;i++){
+        cin>>s[i];
+    }
+    for(i=0;i<M;i++){
+        cin>>c>>a>>b;
+        if(c=='Q'){
+           if(a>b) swap(a,b);
+            max=s[a-1];
+            for(j=a-1;j<b-1;j++){
+                if(max<s[j+1]) max=s[j+1];
+            }
+               cout<<max<<endl;
+       }
+        if(c=='U') s[a-1]=b;
+
+}
+ delete []s;
+}
+   
+    return 0;
+}
