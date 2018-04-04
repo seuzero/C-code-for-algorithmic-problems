@@ -1,0 +1,22 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+ 
+    int m, i;
+    int a[10] = {0};
+    string str;
+    getline(cin, str);
+    m = str.size();
+    for (i = m - 1; i >= 0; i--)
+    {
+        if (a[str[i] - '0'] == 0)
+        {
+            cout << str[i];
+            a[str[i] - '0']++;
+        }
+    }
+    return 0;
+}
