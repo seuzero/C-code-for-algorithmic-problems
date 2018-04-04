@@ -1,0 +1,18 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+int main(){
+    string s;
+    while(getline(cin,s)){
+      string::iterator left=s.begin();
+        for(string::iterator itr=s.begin();itr!=s.end()+1;++itr){
+             if(itr==s.end()||*itr==' '){
+                 reverse(left,itr);
+                 left=itr+1;
+             }     
+        }
+          reverse(s.begin(),s.end());
+        cout<<s;
+    }
+    return 0;
