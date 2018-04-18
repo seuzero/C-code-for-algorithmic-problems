@@ -1,0 +1,115 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+int p[7]={0};
+void is(string s)
+{
+    int a=0,b=0,flag;
+    vector<int> vec(4);
+    for(int i=0;i<s.length();i++)
+    {
+        a=0;
+        flag=0;
+        for(;i<s.length()&&s[i]!='.';i++)
+        {
+            flag=1;
+            if(s[i]>='0'&&s[i]<='9')
+                a=a*10+s[i]-'0';
+            else
+            {
+                p[5]++;
+                return;
+            }
+        }
+        if(flag&&a<256)
+            vec[b]=a;
+        else
+        {
+            p[5]++;
+            return;
+        }
+        b++;
+    }
+    if(vec[0]>0)
+    {
+        if(vec[0]<127)
+        {
+            p[0]++;
+            if(vec[0]==10)
+                p[6]++;//私网ip
+        }
+        else if(vec[0]<192&&vec[0]>127)
+        {
+            p[1]++;
+            if(vec[0]==172&&vec[1]>=16&&vec[1]<=31)//私网ip
+                p[6]++;
+        }
+        else if(vec[0]>191&&vec[0]<224)
+        {
+            p[2]++;
+            if(vec[0]==192&&vec[1]==168)//私网ip
+                p[6]++;
+        }
+        else if(vec[0]>223&&vec[0]<240)
+            p[3]++;
+        else if(vec[0]>239)
+            p[4]++;
+    }
+}
+int isvalid(string s)
+{
+    int a,b=0,flag,flag2=0;
+    vector<int> vec(4);
+    for(int i=0;i<s.length();i++)
+    {
+        a=0;flag=0;
+        for(;i<s.length()&&s[i]!='.';i++)
+        {
+            flag=1;
+            if(s[i]>='0'&&s[i]<='9')
+                a=a*10+s[i]-'0';
+            else
+                return 0;
+        }
+        if(flag&&(a==255||a==254||a==252||a==248||a==240||a==224||a==192||a==128||a==0))
+            vec[b]=a;
+        else
+            return 0;
+        b++;
+    }
+    for(int i=0;i<4;i++)
+    {
+        if(flag2==0)
+        {
+            if(vec[i]<255)//前一个有小于255的，说明有0，则后面应全是0
+                flag2=1;
+        }
+        else
+        {
+            if(vec[i]!=0)//则后面应全是0
+                return 0;
+        }
+    }
+    if(vec[3]==255)
+        return 0;
+    return 1;
+}
+int main()
+{
+    string s;
+    int i;
+    while(cin>>s)
+    {
+        string ss,sss;
+        for(i=0;i<s.length()&&s[i]!='~';i++)
+            ss=s.substr(0,i);//ip地址
+        sss=s.substr(i+1,s.length()-i);//掩码
+        if(isvalid(sss))
+            is(ss);
+        else
+            p[5]++;
+    }
+    cout<<p[0]<<" "<<p[1]<<" "<<p[2]<<" "<<p[3]<<" "<<p[4]<<" "<<p[5]<<" "<<p[6]<<endl;
+    return 0;
+}
